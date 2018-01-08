@@ -66,21 +66,21 @@ public class Register extends AppCompatActivity {
                 confirmPasswordInput = etConfirmPassword.getText().toString();
 
                 if (isAllFieldsFilled(nameInput, emailInput, passwordInput, confirmPasswordInput)) {
-
                     if (isEmailValid(emailInput)) {
+                        if (isPasswordMatches(passwordInput, confirmPasswordInput)) {
+                            sharedPreferences = getSharedPreferences("com.com.evening.session.sharedpreferences", Context.MODE_PRIVATE);
+                            sharedPreferences.edit().putString("name", etName.getText().toString()).apply();
+                            sharedPreferences.edit().putString("email", etEmail.getText().toString()).apply();
+                            sharedPreferences.edit().putString("password", etPassword.getText().toString()).apply();
+                            sharedPreferences.edit().putString("confirm password", etConfirmPassword.getText().toString()).apply();
+                            Toast.makeText(Register.this, "Data inserted", Toast.LENGTH_SHORT).show();
 
-
-                        sharedPreferences = getSharedPreferences("com.com.evening.session.sharedpreferences", Context.MODE_PRIVATE);
-                        sharedPreferences.edit().putString("name", etName.getText().toString()).apply();
-                        sharedPreferences.edit().putString("email", etEmail.getText().toString()).apply();
-                        sharedPreferences.edit().putString("password", etPassword.getText().toString()).apply();
-                        sharedPreferences.edit().putString("confirm password", etConfirmPassword.getText().toString()).apply();
-                        Toast.makeText(Register.this, "Data inserted", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(Register.this, "Please enter correct password", Toast.LENGTH_SHORT).show();
+                        }
                     } else {
                         Toast.makeText(Register.this, "Please enter correct email address", Toast.LENGTH_SHORT).show();
-
                     }
-
 
                 } else {
                     Toast.makeText(Register.this, "Please enter your all information", Toast.LENGTH_SHORT).show();
@@ -107,6 +107,19 @@ public class Register extends AppCompatActivity {
         } else {
             return true;
         }
+    }
+
+    public boolean isPasswordMatches(String password, String confirmPassword) {
+
+        if (password.equals(confirmPassword)) {
+
+            return true;
+
+        } else {
+
+            return false;
+        }
+
     }
 }
 
